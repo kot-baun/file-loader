@@ -10,8 +10,16 @@ const loadConfig = () => {
   try {
     if (fs.existsSync(config)) {
 
-      const configFile = fs.readFileSync(config, 'utf-8');
+      const configFile = fs.readFile(config, (err, data) => {
+        if (err)
+          console.log("no file");
+
+        if (data)
+          console.log(JSON.parse(configFile));
+
+      });
       console.log(JSON.parse(configFile));
+
       // return JSON.parse(configFile);
     } else {
       console.log('no file');
