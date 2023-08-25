@@ -1,62 +1,70 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
+const { app, BrowserWindow } = require('electron')
+const path = require('path')
 const url = require('url')
 const fs = require('fs')
-
 
 let config = './src/config.json'
 
 const loadConfig = () => {
-  try {
-    if (fs.existsSync(config)) {
+    console.log('loadConfig')
+    try {
+        fs.readFile(config, (err, data) => {
+            if (err) {
+                console.log('no file')
+            }
 
-      const configFile = fs.readFile(config, (err, data) => {
-        if (err)
-          console.log("no file");
+            if (data) {
+                console.log(JSON.parse(data))
+            }
+        })
 
-        if (data)
-          console.log(JSON.parse(configFile));
-
-      });
-      console.log(JSON.parse(configFile));
-
-      // return JSON.parse(configFile);
-    } else {
-      console.log('no file');
+        // return JSON.parse(configFile);
+    } catch (error) {
+        console.error('Error loading config:', error)
+        return {} // Если файл не существует или возникла ошибка, вернуть пустой объект
     }
-
-  } catch (error) {
-    console.error('Error loading config:', error);
-    return {}; // Если файл не существует или возникла ошибка, вернуть пустой объект
-  }
 }
 
 const createWindow = () => {
-  console.log(app.getPath('userData'));
-  const win = new BrowserWindow({
-    width: 300,
-    height: 500,
-    icon: path.join(__dirname, './calculator/icon.png'),
-    resizable: false
-  });
-  win.setMenuBarVisibility(false);
-  win.setTitle('Калькулятор');
-  // win.loadFile('src/index.html');
-  win.loadURL(url.format({
-    pathname: path.join(__dirname, './calculator/calculator.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
+    console.log(app.getPath('userData'))
+    const win = new BrowserWindow({
+        width: 300,
+        height: 500,
+        icon: path.join(__dirname, './calculator/icon.png'),
+        resizable: false,
+    })
+    win.setMenuBarVisibility(false)
+    win.setTitle('Калькулятор')
+    // win.loadFile('src/index.html');
+    win.loadURL(
+        url.format({
+            pathname: path.join(__dirname, './calculator/calculator.html'),
+            protocol: 'file:',
+            slashes: true,
+        })
+    )
 }
 
+function createSplashWindow() {
+    console.log('create sclash')
+    const splash = new BrowserWindow({
+        width: 1200,
+        height: 800,
+        resizable: false,
+        frame: false,
+        resizable: false,
+        maximizable: false,
+        titleBarStyle: 'hidden',
 
-
-
-
+        // frameless
+    })
+    splash.setMenuBarVisibility(false)
+    splash.loadFile('./src/god/screens/00_splash/splash.html')
+}
 
 app.whenReady().then(() => {
-  loadConfig();
-  createWindow();
-});
-app.on('window-all-closed', () => app.quit());
+    loadConfig()
+    createSplashWindow()
+})
+app.on('window-all-closed', () => app.quit())
 //tttttt
