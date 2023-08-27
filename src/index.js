@@ -59,12 +59,23 @@ function createSplashWindow() {
         // frameless
     })
     splash.setMenuBarVisibility(false)
-    splash.loadFile('./src/god/screens/00_splash/splash.html')
+    // splash.loadFile('./src/god/screens/00_splash/splash.html')
+    splash.loadURL(
+        url.format({
+            pathname: path.join(__dirname, './god/screens/00_splash/splash.html'),
+            protocol: 'file:',
+            slashes: true,
+        })
+    )
+
+
+
 }
 
 app.whenReady().then(() => {
     loadConfig()
     createSplashWindow()
+    // createWindow()
 })
 app.on('window-all-closed', () => app.quit())
 //tttttt

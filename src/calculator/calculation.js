@@ -1,34 +1,36 @@
 // Теги
-let input = window.document.querySelector('#input');
-let output = window.document.querySelector('#output');
+let input = window.document.querySelector('#input')
+let output = window.document.querySelector('#output')
 // Переменные
-let isLastChar = false;
+let isLastChar = false
 // Функции
 const clr = () => {
-    input.innerText = '0';
-    output.innerText = '0';
+    input.innerText = '0'
+    output.innerText = '0'
 }
 const calcInput = () => {
-    input.innerText = output.innerText;
+    input.innerText = output.innerText
 }
 const calcOutput = () => {
-    output.innerText = eval(input.innerText);
+    output.innerText = eval(input.innerText)
 }
 const add = (value) => {
     if (input.innerText.length <= 10) {
         if (input.innerText === '0') {
-            input.innerText = value;
+            input.innerText = value
         } else {
-            input.innerText += value;
+            input.innerText += value
         }
     }
 }
 const addNum = (num) => {
-    add(num);
-    isLastChar = false;
-    calcOutput();
+    console.log('hello ' + num)
+
+    add(num)
+    isLastChar = false
+    calcOutput()
 }
 const addChar = (char) => {
-    if (!isLastChar) add(char);
-    isLastChar = true;
+    if (!isLastChar) add(char)
+    isLastChar = true
 }
